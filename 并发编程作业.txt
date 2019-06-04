@@ -1,0 +1,16 @@
+请列出Happens-before的几种规则
+1、程序顺序性规则：单个线程中，前面的操作happens-before于后面的操作；
+2、volatile变量规则：被volatile修饰的变量，写操作一定happens-before于读操作；
+3、传递性规则：如果a happens-before b， b happens-before c，那么a happens-before c；
+4、start规则：如果线程A执行ThreadB.start()，那么线程A的ThreadB.start()操作happens-before于线程B中任意操作；
+5、join规则：如果线程A执行ThreadB.join()，那么线程B中任意操作happens-before与线程A从ThreadB.join()返回；
+6、监视器规则：对一个对象的解锁，happens-before与随后对这个对象的加锁。
+
+volatile 能使得一个非原子操作变成原子操作吗？为什么？
+不能。volatile解决可见性问题和有序性问题，无法解决原子性问题。
+
+哪些场景适合使用Volatile？
+在多线程的情况下，变量需要在多个线程中共享时，使用volatile。被volatile修饰的变量会带有lock指令，保证可见性；而且volatile修饰的变量，写操作happens-before于读操作，保证了有序性。
+
+如果对一个数组修饰volatile，是否能够保证数组元素的修改对其他线程的可见？为什么？
+不能。volatile只能保证数组的可见性，无法保证其元素可见性。
